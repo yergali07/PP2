@@ -13,3 +13,7 @@ if 5 > 2:
 # 4. Syntax: Python variables
 x = 5
 y = "Hello, World!"
+
+# 4. Syntax: Python comments
+#This is a comment.
+print("Hello, World!")
