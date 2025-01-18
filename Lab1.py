@@ -10,3 +10,6 @@ print(sys.version)
 if 5 > 2:
   print("Five is greater than two!")
 
+# 4. Syntax: Python variables
+x = 5
+y = "Hello, World!"
