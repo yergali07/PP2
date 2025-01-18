@@ -17,3 +17,16 @@ y = "Hello, World!"
 # 4. Syntax: Python comments
 #This is a comment.
 print("Hello, World!")
+
+# 5. Comments: Multi Line Comments
+#This is a comment
+#written in
+#more than just one line
+print("Hello, World!")
+
+"""
+This is a comment
+written in
+more than just one line
+"""
+print("Hello, World!")
