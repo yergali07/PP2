@@ -29,18 +29,18 @@ font = pygame.font.SysFont("Verdana", 60)
 font_small = pygame.font.SysFont("Verdana", 20)
 game_over = font.render("Game Over", True, BLACK)
 
-background = pygame.image.load("Lab8/images/AnimatedStreet.png")
+background = pygame.image.load("Lab8/Racer/images/AnimatedStreet.png")
 
 #Create a white screen 
 DISPLAYSURF = pygame.display.set_mode((400,600))
 DISPLAYSURF.fill(WHITE)
-pygame.display.set_caption("Game")
+pygame.display.set_caption("Racer")
 
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Lab8/images/Enemy.png")
+        self.image = pygame.image.load("Lab8/Racer/images/Enemy.png")
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 
@@ -56,7 +56,7 @@ class Enemy(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Lab8/images/Player.png")
+        self.image = pygame.image.load("Lab8/Racer/images/Player.png")
         self.rect = self.image.get_rect()
         self.rect.center = (160, 520)
        
@@ -73,7 +73,7 @@ class Player(pygame.sprite.Sprite):
 class Coin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        original_image = pygame.image.load("Lab8/images/Coin.png")
+        original_image = pygame.image.load("Lab8/Racer/images/Coin.png")
         self.image = pygame.transform.scale(original_image, (30, 30))
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
@@ -129,7 +129,7 @@ while True:
 
     #Check collision with Enemy
     if pygame.sprite.spritecollideany(P1, enemies):
-        pygame.mixer.Sound('Lab8/sounds/crash.wav').play()
+        pygame.mixer.Sound('Lab8/Racer/sounds/crash.wav').play()
         time.sleep(1)
         DISPLAYSURF.fill(RED)
         DISPLAYSURF.blit(game_over, (30, 250))
