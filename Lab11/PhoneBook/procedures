@@ -1,0 +1,49 @@
+CREATE OR REPLACE PROCEDURE insert_or_update_user(p_name VARCHAR, p_phone VARCHAR)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM phonebook WHERE name = p_name) THEN
+        UPDATE phonebook SET phone = p_phone WHERE name = p_name;
+    ELSE
+        INSERT INTO phonebook(name, phone) VALUES (p_name, p_phone);
+    END IF;
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE insert_many_users(
+    p_names TEXT[],
+    p_phones TEXT[],
+    OUT invalid_entries TEXT[]
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    i INT;
+    temp_invalid TEXT[];
+BEGIN
+    temp_invalid := ARRAY[]::TEXT[];
+
+    FOR i IN 1 .. array_length(p_names, 1) LOOP
+        IF p_phones[i] ~ '^\d{10,15}$' THEN
+            IF EXISTS (SELECT 1 FROM phonebook WHERE name = p_names[i]) THEN
+                UPDATE phonebook SET phone = p_phones[i] WHERE name = p_names[i];
+            ELSE
+                INSERT INTO phonebook(name, phone) VALUES (p_names[i], p_phones[i]);
+            END IF;
+        ELSE
+            temp_invalid := array_append(temp_invalid, p_names[i] || ':' || p_phones[i]);
+        END IF;
+    END LOOP;
+
+    invalid_entries := temp_invalid;
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE delete_by_name_or_phone(p_value TEXT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    DELETE FROM phonebook p
+    WHERE p.name = p_value OR p.phone = p_value;
+END;
+$$;
